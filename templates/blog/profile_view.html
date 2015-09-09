@@ -1,0 +1,12 @@
+{% extends "blog/home.html" %}
+
+{% block content %}
+
+
+{{ profile.user.username }}<br>
+{{ profile.name }}<br>
+{{ profile.bio }}<br>
+{{ profile.contect }}<br>
+
+<a class="btn btn-default" href='/blog/profile/'><span class="glyphicon glyphicon-pencil"></span></a>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from blog.models import Register,UserEditPro
-from forms import UserEditPro,SignupForm,LoginForm
+from forms import UserForm,SignupForm,LoginForm
 # Create your views here.
 def home(request):
     return render(request , 'blog/home.html' , {})
@@ -27,7 +27,7 @@ def signup(request):
 def login(request):
     try:
         if request.session['email']:
-            return HttpResponseRedirect('/blog/profile/')
+            return HttpResponseRedirect('/blog/profile_view/')
     except:
         pass
     if request.method == 'POST':
@@ -37,7 +37,7 @@ def login(request):
                 user=Register.objects.filter(email=form.cleaned_data['email'],password=form.cleaned_data['password'])
                 if len(user)==1:
                     request.session['email']=user[0].email
-                    return HttpResponseRedirect('/blog/profile/')
+                    return HttpResponseRedirect('/blog/profile_view/')
                 else:
                     return HttpResponse("Login fail   . Try again")
             except DoesNotExist:
@@ -46,37 +46,6 @@ def login(request):
         form=LoginForm()
 
         return render(request,'blog/login.html',{'form':form})
-
-def profile(request):
-    if request.session['email']:
-        if request.method=='POST':
-            a=Register.objects.get(email=request.session['email'])
-            try:
-                b=UserEditPro.objects.get(user=a)
-            except:
-                b=UserEditPro(user=a)
-                b.save()
-                b=UserEditPro.objects.get(user=a)
-            form=UserEditPro(request.POST,instance=b)
-            if form.is_valid():
-                f=form.save(commit=False)
-                f.user=a
-                f.save()
-                return HttpResponseRedirect('/blog/login/')
-            else:
-                return render(request,'blog/profile.html',{'form':form})
-        else:
-            a=Register.objects.get(email=request.session['email'])
-            try:
-                b=UserEditPro.objects.get(user=a)
-            except:
-                b = UserEditPro(user=a)
-                b.save()
-                b=UserEditPro.objects.get(user=a)
-            form=UserEditPro(instance=b)
-            return render(request,'blog/profile.html',{'form':form})
-    else:
-        return HttpResponseRedirect('blog/login/')
 
 
 def profile_view(request):   
@@ -94,6 +63,38 @@ def profile_view(request):
 
 
 
+def profile(request):
+    if request.session['email']:
+        if request.method=='POST':
+            a=Register.objects.get(email=request.session['email'])
+            try:
+                b=UserEditPro.objects.get(user=a)
+            except:
+                b=UserEditPro(user=a)
+                b.save()
+                b=UserEditPro.objects.get(user=a)
+            form=UserForm(request.POST,instance=b)
+            if form.is_valid():
+                f=form.save(commit=False)
+                f.user=a
+                f.save()
+                return HttpResponseRedirect('/blog/login/')
+            else:
+                return render(request,'blog/profile.html',{'form':form})
+        else:
+            a=Register.objects.get(email=request.session['email'])
+            try:
+                b=UserEditPro.objects.get(user=a)
+            except:
+                b = UserEditPro(user=a)
+                b.save()
+                b=UserEditPro.objects.get(user=a)
+            form=UserForm(instance=b)
+            return render(request,'blog/profile.html',{'form':form})
+    else:
+        return HttpResponseRedirect('blog/login/')
 
-
+def logout(request):
+    del request.session['email']
+    return HttpResponseRedirect('/blog/login/')
 

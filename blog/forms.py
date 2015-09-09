@@ -12,7 +12,7 @@ class LoginForm(forms.Form):
 	email=forms.CharField(max_length=25)
 	password=forms.CharField(widget=forms.PasswordInput())
 
-class UserEditPro(forms.ModelForm):
+class UserForm(forms.ModelForm):
 
 	class Meta:
 		model=UserEditPro
