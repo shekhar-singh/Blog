@@ -1,0 +1,10 @@
+{% extends "blog/home.html" %}
+{% block content %}
+    <div id="login">
+        <form class="form-horizontal" name="LoginForm" action="/blog/login/" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit">
+        </form>
+    </div>
+{% endblock %}

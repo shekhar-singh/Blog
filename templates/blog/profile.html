@@ -1,0 +1,21 @@
+{% extends "blog/home.html" %}
+
+{% block content %}
+
+<h2>Profile</h2>
+
+{% for field in form %}
+{{field.error}}
+
+{% endfor %} 
+<form action="/blog/profile/" method="post" >
+{% csrf_token %}
+
+{{form.as_p}}
+
+
+<input type="submit" value="Update"/>
+
+</form>
+
+{% endblock %}

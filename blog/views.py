@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from blog.models import Register,UserEditPro
+from forms import UserEditPro,SignupForm,LoginForm
 # Create your views here.
 def home(request):
     return render(request , 'blog/home.html' , {})
@@ -30,7 +31,7 @@ def login(request):
     except:
         pass
     if request.method == 'POST':
-        form=LoginForm(request.POST)
+        form=LoginForm(request.POST) 
         if form.is_valid():
             try:
                 user=Register.objects.filter(email=form.cleaned_data['email'],password=form.cleaned_data['password'])
@@ -41,8 +42,8 @@ def login(request):
                     return HttpResponse("Login fail   . Try again")
             except DoesNotExist:
                 return None
-        else:
-            form=LoginForm()
+    else:
+        form=LoginForm()
 
         return render(request,'blog/login.html',{'form':form})
 
