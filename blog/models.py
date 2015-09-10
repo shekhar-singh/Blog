@@ -21,14 +21,14 @@ class UserEditPro(models.Model):
         return self.user
 
 class Post(models.Model):
-    author = models.ForeignKey()
+    author = models.ForeignKey(UserEditPro)
     title=models.CharField(max_length=50)
     body=models.TextField(null=True,blank=True)
-    pubdate=models.DateTimeField(blank=True, null=True)
+    published_date=models.DateTimeField(blank=True, null=True)
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title

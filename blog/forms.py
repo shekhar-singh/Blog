@@ -17,3 +17,9 @@ class UserForm(forms.ModelForm):
 	class Meta:
 		model=UserEditPro
 		fields=['name','bio','contect']
+
+class PostForm(forms.ModelForm):
+
+	class Meta:
+		model=Post
+		fields=['title','body','pubdate']

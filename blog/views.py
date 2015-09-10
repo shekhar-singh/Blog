@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from blog.models import Register,UserEditPro
-from forms import UserForm,SignupForm,LoginForm
+from blog.models import Register,UserEditPro,Post
+from forms import UserForm,SignupForm,LoginForm,PostForm
 # Create your views here.
 def home(request):
     return render(request , 'blog/home.html' , {})
