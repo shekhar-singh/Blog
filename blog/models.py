@@ -21,7 +21,7 @@ class UserEditPro(models.Model):
         return self.user
 
 class Post(models.Model):
-    author = models.ForeignKey(UserEditPro)
+    author = models.ForeignKey(Register)
     title=models.CharField(max_length=50)
     body=models.TextField(null=True,blank=True)
     published_date=models.DateTimeField(blank=True, null=True)

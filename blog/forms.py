@@ -1,5 +1,5 @@
 from django import forms
-from blog.models import Register,UserEditPro
+from blog.models import Register,UserEditPro ,Post
 
 class SignupForm(forms.ModelForm):
 	password=forms.CharField(widget=forms.PasswordInput())
@@ -22,4 +22,4 @@ class PostForm(forms.ModelForm):
 
 	class Meta:
 		model=Post
-		fields=['title','body','pubdate']
+		fields=['title','body','published_date']
